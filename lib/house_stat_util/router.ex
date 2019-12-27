@@ -1,7 +1,7 @@
 defmodule HouseStatUtil.Router do
   use Plug.Router
 
-  alias HouseStatUtil.TestController
+  alias HouseStatUtil.ViewController.TestController
   
   plug Plug.Logger
   

@@ -2,11 +2,14 @@ defmodule HouseStatUtil.RouterTest do
   use ExUnit.Case, async: true
   use Plug.Test
 
+  alias HouseStatUtil.Router
+  
   @opts HouseStatUtil.Router.init([])
 
-  test "/test returns 'foo'" do
-    conn = conn(:get, "/test")
-    conn = HouseStatUtil.Router.call(conn, @opts)
+  test "/test returns 200, 'foo'" do
+    conn = :get
+    |> conn("/test")
+    |> Router.call(@opts)
 
     IO.inspect conn
 
