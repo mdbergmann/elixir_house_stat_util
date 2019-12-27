@@ -17,4 +17,16 @@ defmodule HouseStatUtil.RouterTest do
     assert conn.status == 200
     assert String.contains?(conn.resp_body, "foo")
   end
+
+  test "get on '/'" do
+    conn = :get
+    |> conn("/")
+    |> Router.call(@opts)
+
+    IO.inspect conn
+
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert String.contains?(conn.resp_body, "Submit values to openHAB")
+  end
 end
