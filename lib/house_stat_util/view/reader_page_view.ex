@@ -33,18 +33,22 @@ defmodule HouseStatUtil.View.ReaderPageView do
 
   defp render_form(assigns) do
     form action: "/" do
-      render_reader_inputs(Map.get(assigns, "reader_inputs", %{}))
+      render_reader_inputs(Map.get(assigns, :reader_inputs, %{}))
     end
   end
 
   defp render_reader_inputs(reader_inputs) do
     reader_inputs
     |> Enum.map(fn ri ->
-      div do
-        input type: "checkbox", name: "selected"
-        input type: "text", name: "reader_value"
-        span ri.display_name
-      end    
+      render_reader(ri)
     end)
+  end
+
+  defp render_reader(reader) do
+    div do
+      input type: "checkbox", name: "selected"
+      input type: "text", name: "reader_value"
+      span reader.display_name
+    end        
   end
 end
