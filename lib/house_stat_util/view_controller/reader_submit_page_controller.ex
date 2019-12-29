@@ -10,7 +10,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
   
   def post(params) do
 
-    results = params
+    post_results = params
     |> Enum.filter(&(String.starts_with?(elem(&1, 0), "selected_")))
     |> IO.inspect
     |> Enum.map(&(elem(&1, 0)))
@@ -26,22 +26,20 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
         base_url: "http://localhost:8080/rest/items/"
       }
     end)
-    |> Enum.map(fn r ->
-      RestInserter.post(r)
-    end)
+    |> Enum.map(&RestInserter.post/1)
 
-    Logger.info("Have results: #{inspect results}")
+    Logger.info("Have results: #{inspect post_results}")
 
-    create_status_tuple(results)
+    create_status_tuple(post_results)
     |> create_response    
   end
 
-  defp create_status_tuple(results) do
+  defp create_status_tuple(post_results) do
     cond do
-      Enum.all?(results, &(elem(&1, 0) == :ok)) -> {200, ""}
+      Enum.all?(post_results, &(elem(&1, 0) == :ok)) -> {200, ""}
       true -> {
         500,
-        Enum.filter(results, &(elem(&1, 0) == :error))
+        Enum.filter(post_results, &(elem(&1, 0) == :error))
         |> Enum.map(&(elem(&1, 1)))
         |> Enum.join(", ")}
     end
@@ -60,7 +58,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
      ) |> render_to_string()
     }
   end
-  
+
   defp determine_reader_id(:elec), do: "ElecReaderStateInput"
   defp determine_reader_id(:water), do: "WaterReaderStateInput"
   defp determine_reader_id(:chip), do: "ChipReloadVolumeInput"

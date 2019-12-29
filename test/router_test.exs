@@ -6,18 +6,6 @@ defmodule HouseStatUtil.RouterTest do
   
   @opts HouseStatUtil.Router.init([])
 
-  test "/test returns 200, 'foo'" do
-    conn = :get
-    |> conn("/test")
-    |> Router.call(@opts)
-
-    IO.inspect conn
-
-    assert conn.state == :sent
-    assert conn.status == 200
-    assert String.contains?(conn.resp_body, "foo")
-  end
-
   test "get on '/'" do
     conn = :get
     |> conn("/")

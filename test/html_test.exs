@@ -92,7 +92,7 @@ defmodule HouseStatUtil.HTMLTest do
 
     IO.inspect elem
 
-    assert elem == ~s(<h2 class="foo">content</)
+    assert elem == ~s(<h2 class="foo">content</h2>)
   end
   
 end

@@ -10,15 +10,15 @@ defmodule HouseStatUtil.View.ReaderPageView do
         render_body(assigns)
       ]
     )
-    |> render_to_string
+    |> render_to_string()
     
     {:ok, rendered}
   end
 
   defp render_header() do
-    head(
+    head([
       htag(:title, "House Stat Util")
-    )
+    ])
   end
 
   defp render_body(assigns) do
@@ -43,9 +43,7 @@ defmodule HouseStatUtil.View.ReaderPageView do
 
   defp render_reader_inputs(reader_inputs) do
     reader_inputs
-    |> Enum.map(fn ri ->
-      render_reader(ri)
-    end)
+    |> Enum.map(&render_reader/1)
   end
 
   defp render_reader(reader) do

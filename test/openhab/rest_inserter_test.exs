@@ -3,11 +3,11 @@ defmodule OpenHab.RestInserterTest do
 
   import Mock
   alias HTTPoison
-  alias HouseStatUtil.Core.ReaderValue
+  alias HouseStatUtil.OpenHab.ReaderValue
   alias HouseStatUtil.OpenHab.RestInserter
 
   @reader_value %ReaderValue{
-    id: 1,
+    id: "1",
     value: 123.4,
     base_url: "http://localhost:8080/rest/items/"
   }
