@@ -4,10 +4,10 @@ defmodule HouseStatUtil.View.TestViewTest do
   use Eml
   use Eml.HTML
   
-  alias HouseStatUtil.View.TestView
+  alias HouseStatUtil.View.TestPageView
   
   test "/test view with empty params" do
-    rendered = TestView.render(%{})
+    rendered = TestPageView.render(%{})
 
     assert rendered == {:ok,
                         html do

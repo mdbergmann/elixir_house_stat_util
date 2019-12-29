@@ -4,13 +4,14 @@ defmodule HouseStatUtil.View.TestPageView do
   use Eml
   use Eml.HTML
   
-  def render(assigns \\ %{}) do
+  def render(_assigns \\ %{}) do
     {:ok, 
      html do
        body do
          "foo"
        end
-     end |> Eml.compile()
+     end
+     |> Eml.compile()
     }
   end
   
