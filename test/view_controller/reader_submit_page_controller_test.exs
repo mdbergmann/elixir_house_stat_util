@@ -6,12 +6,25 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
   alias HouseStatUtil.OpenHab.RestInserter
   alias HouseStatUtil.OpenHab.ReaderValue
 
+  @openhab_url Application.get_env(:elixir_house_stat_util, :openhab_base_url)
+  
   @reader_data %{
     "reader_value_chip" => "",
     "reader_value_elec" => "1123.6",
     "reader_value_water" => "4567",
     "selected_elec" => "on",
     "selected_water" => "on"
+  }
+
+  @expected_elec_reader_value %ReaderValue{
+    id: "ElecReaderStateInput",
+    value: 1123.6,
+    base_url: @openhab_url
+  }
+  @expected_water_reader_value %ReaderValue{
+    id: "WaterReaderStateInput",
+    value: 4567.0,
+    base_url: @openhab_url
   }
   
   test "handle GET" do
@@ -29,40 +42,17 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
   end
 
   test "handle POST - with reader selection" do
-    expected_elec_reader_value = %ReaderValue{
-      id: "ElecReaderStateInput",
-      value: 1123.6,
-      base_url: "http://localhost:8080/rest/items/"
-    }
-    expected_water_reader_value = %ReaderValue{
-      id: "WaterReaderStateInput",
-      value: 4567.0,
-      base_url: "http://localhost:8080/rest/items/"
-    }
-    
     with_mock RestInserter,
       [post: fn _reader -> {:ok, ""} end] do
 
       assert {200, _} = ReaderSubmitPageController.post(@reader_data)
       
-      assert called RestInserter.post(expected_elec_reader_value)
-      assert called RestInserter.post(expected_water_reader_value)
+      assert called RestInserter.post(@expected_elec_reader_value)
+      assert called RestInserter.post(@expected_water_reader_value)
     end
   end
 
   test "handle POST - with reader selection - one error on submit" do
-
-    expected_elec_reader_value = %ReaderValue{
-      id: "ElecReaderStateInput",
-      value: 1123.6,
-      base_url: "http://localhost:8080/rest/items/"
-    }
-    expected_water_reader_value = %ReaderValue{
-      id: "WaterReaderStateInput",
-      value: 4567.0,
-      base_url: "http://localhost:8080/rest/items/"
-    }
-    
     with_mock RestInserter,
       [post: fn reader ->
         case reader.id do
@@ -74,8 +64,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
       {500, err_msg} = ReaderSubmitPageController.post(@reader_data)
       assert String.contains?(err_msg, "Error on submitting water reader!")
       
-      assert called RestInserter.post(expected_elec_reader_value)
-      assert called RestInserter.post(expected_water_reader_value)
+      assert called RestInserter.post(@expected_elec_reader_value)
+      assert called RestInserter.post(@expected_water_reader_value)
     end
   end
 end
