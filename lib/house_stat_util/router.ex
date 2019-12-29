@@ -3,6 +3,7 @@ defmodule HouseStatUtil.Router do
 
   alias HouseStatUtil.ViewController.TestController
   alias HouseStatUtil.ViewController.ReaderPageController
+  alias HouseStatUtil.ViewController.ReaderSubmitPageController
   
   plug Plug.Logger
   
@@ -20,7 +21,8 @@ defmodule HouseStatUtil.Router do
 
   post "/submit_readers" do
     IO.inspect conn.params
-    send_resp(conn, 200, "")
+    {status, body} = ReaderSubmitPageController.post(conn.params)
+    send_resp(conn, status, body)
   end
   
   get "/test" do

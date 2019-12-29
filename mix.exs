@@ -24,7 +24,10 @@ defmodule HouseStatUtil.MixProject do
   defp deps do
     [
       {:plug_cowboy, "~> 2.1.0"},
-      {:eml, git: "https://github.com/zambal/eml.git"}
+      {:eml, git: "https://github.com/zambal/eml.git"},
+      {:httpoison, "~> 1.6.2"},
+      {:mock, "~> 0.3.4", only: :test}
+
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]

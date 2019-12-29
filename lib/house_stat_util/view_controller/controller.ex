@@ -1,4 +1,4 @@
 defmodule HouseStatUtil.ViewController.Controller do
-  @callback get(params :: %{String.t() => any()}) :: {integer(), String.t()}
-  @callback post(params :: %{String.t() => any()}) :: {integer(), String.t()}
+  @callback get(params :: %{binary() => any()}) :: {integer(), binary()}
+  @callback post(params :: %{binary() => any()}) :: {integer(), binary()}
 end

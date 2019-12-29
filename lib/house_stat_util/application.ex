@@ -3,6 +3,8 @@ defmodule HouseStatUtil.Application do
 
   use Application
 
+  require Logger
+
   def start(_type, _args) do
     children = [
       Plug.Cowboy.child_spec(
@@ -12,7 +14,10 @@ defmodule HouseStatUtil.Application do
     ]
 
     opts = [strategy: :one_for_one, name: HouseStatUtil.Supervisor]
-    Supervisor.start_link(children, opts)    
+    pid = Supervisor.start_link(children, opts)
+    Logger.info("Server started")
+
+    pid
   end
 
   defp application_port do
