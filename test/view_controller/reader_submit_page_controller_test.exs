@@ -71,8 +71,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
         end
       end] do
 
-      assert {500, _} =
-        ReaderSubmitPageController.post(@reader_data)
+      {500, err_msg} = ReaderSubmitPageController.post(@reader_data)
+      assert String.contains?(err_msg, "Error on submitting water reader!")
       
       assert called RestInserter.post(expected_elec_reader_value)
       assert called RestInserter.post(expected_water_reader_value)

@@ -20,14 +20,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
     |> Enum.map(fn r ->
       type = elem(r, 0)
       value = elem(r, 1)
-      reader_id =
-        case type do
-          :elec -> "ElecReaderStateInput"
-          :water -> "WaterReaderStateInput"
-          :chip -> "ChipReloadVolumeInput"
-        end
       %ReaderValue{
-        id: reader_id,
+        id: determine_reader_id(type),
         value: elem(Float.parse(value), 0),
         base_url: "http://localhost:8080/rest/items/"
       }
@@ -38,11 +32,22 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
 
     Logger.info("Have results: #{inspect results}")
 
-    {status, msg} = cond do
+    create_status_tuple(results)
+    |> create_response    
+  end
+
+  defp create_status_tuple(results) do
+    cond do
       Enum.all?(results, &(elem(&1, 0) == :ok)) -> {200, ""}
-      true -> {500, "Not all readers submitted OK!"}
+      true -> {
+        500,
+        Enum.filter(results, &(elem(&1, 0) == :error))
+        |> Enum.map(&(elem(&1, 1)))
+        |> Enum.join(", ")}
     end
-    
+  end
+
+  defp create_response({status, msg}) do
     {status,
      html(
        body(
@@ -55,6 +60,11 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
      ) |> render_to_string()
     }
   end
+  
+  defp determine_reader_id(:elec), do: "ElecReaderStateInput"
+  defp determine_reader_id(:water), do: "WaterReaderStateInput"
+  defp determine_reader_id(:chip), do: "ChipReloadVolumeInput"
+  defp determine_reader_id(_), do: raise "Unknown reader type!"
   
   def get(_params) do
     {400, "Not supported!"}
