@@ -1,40 +1,44 @@
 defmodule HouseStatUtil.View.ReaderPageView do
   @behaviour HouseStatUtil.View.View
 
-  use Eml
-  use Eml.HTML
-  
+  import HouseStatUtil.HTML
+
   def render(assigns \\ %{}) do
-    body = html do
-      render_header()
-      render_body(assigns)
-    end
-    |> Eml.compile()
+    rendered = html(
+      [
+        render_header(),
+        render_body(assigns)
+      ]
+    )
+    |> render_to_string
     
-    {:ok, body}
+    {:ok, rendered}
   end
 
   defp render_header() do
-    head do
-      title do
-        "House Stat Util"
-      end
-    end
+    head(
+      htag(:title, "House Stat Util")
+    )
   end
 
   defp render_body(assigns) do
-    body do
-      h2 do
-        "Submit values to openHAB"
-      end
-      render_form(assigns)
-    end
+    body(
+      [
+        htag(:h2, "Submit values to openHAB"),
+        render_form(assigns)
+      ]
+    )
   end
 
   defp render_form(assigns) do
-    form action: "/" do
-      render_reader_inputs(Map.get(assigns, :reader_inputs, %{}))
-    end
+    form(
+      [
+        render_reader_inputs(Map.get(assigns, :reader_inputs, %{})),
+        input(type: "submit", value: "Submit")
+      ],
+      action: "/submit_readers",
+      method: "post"
+    )
   end
 
   defp render_reader_inputs(reader_inputs) do
@@ -45,10 +49,12 @@ defmodule HouseStatUtil.View.ReaderPageView do
   end
 
   defp render_reader(reader) do
-    div do
-      input type: "checkbox", name: "selected"
-      input type: "text", name: "reader_value"
-      span reader.display_name
-    end        
+    hdiv(
+      [
+        input(type: "checkbox", name: "selected_" <> to_string(reader.tag)),
+        input(type: "text", name: "reader_value_" <> to_string(reader.tag)),
+        htag(:span, reader.display_name)
+      ]
+    )
   end
 end

@@ -18,6 +18,11 @@ defmodule HouseStatUtil.Router do
     send_resp(conn, status, body)    
   end
 
+  post "/submit_readers" do
+    IO.inspect conn.params
+    send_resp(conn, 200, "")
+  end
+  
   get "/test" do
     {status, body} = TestController.get(conn.params)
     send_resp(conn, status, body)
