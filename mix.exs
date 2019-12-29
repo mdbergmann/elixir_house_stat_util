@@ -26,6 +26,7 @@ defmodule HouseStatUtil.MixProject do
       {:plug_cowboy, "~> 2.1.0"},
       {:eml, git: "https://github.com/zambal/eml.git"},
       {:httpoison, "~> 1.6.2"},
+      {:gettext, "~> 0.17.1"},
       {:mock, "~> 0.3.4", only: :test}
 
       # {:dep_from_hexpm, "~> 0.3.0"},
