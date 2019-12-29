@@ -2,6 +2,7 @@ defmodule HouseStatUtil.View.ReaderPageView do
   @behaviour HouseStatUtil.View.View
 
   import HouseStatUtil.HTML
+  import HouseStatUtil.Gettext
 
   def render(assigns \\ %{}) do
     rendered = html(
@@ -17,14 +18,14 @@ defmodule HouseStatUtil.View.ReaderPageView do
 
   defp render_header() do
     head([
-      htag(:title, "House Stat Util")
+      htag(:title, gettext("House Stat Util"))
     ])
   end
 
   defp render_body(assigns) do
     body(
       [
-        htag(:h2, "Submit values to openHAB"),
+        htag(:h2, gettext("Submit values to openHAB")),
         render_form(assigns)
       ]
     )
@@ -34,7 +35,7 @@ defmodule HouseStatUtil.View.ReaderPageView do
     form(
       [
         render_reader_inputs(Map.get(assigns, :reader_inputs, %{})),
-        input(type: "submit", value: "Submit")
+        input(type: "submit", value: gettext("Submit"))
       ],
       action: "/submit_readers",
       method: "post"

@@ -6,9 +6,10 @@ defmodule HouseStatUtil.MixProject do
       app: :elixir_house_stat_util,
       version: "0.1.0",
       elixir: "~> 1.9",
+      compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
     ]
   end
 

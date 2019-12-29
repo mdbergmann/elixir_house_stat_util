@@ -5,7 +5,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
   alias HouseStatUtil.OpenHab.ReaderValue
 
   import HouseStatUtil.HTML
-  
+  import HouseStatUtil.Gettext
+
   require Logger
 
   @openhab_base_url Application.get_env(:elixir_house_stat_util, :openhab_base_url)
@@ -65,7 +66,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
          [
            htag(:span, msg),
            htag(:br),
-           htag(:a, "Back to input!", href: "/")
+           htag(:a, gettext("Back to input!"), href: "/")
          ]
        )
      ) |> render_to_string()
@@ -78,7 +79,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
   defp determine_reader_id(_), do: raise "Unknown reader type!"
   
   def get(_params) do
-    {400, "Not supported!"}
+    {400, dgettext("error", "Not supported!")}
   end
   
 end
