@@ -27,7 +27,8 @@ defmodule HouseStatUtil.View.ReaderPageViewTest do
       render_string,
       form(
         input(type: "submit", value: "Submit"),
-        action: "/submit_readers"
+        action: "/submit_readers",
+        method: "post"
       ) |> render_to_string
     )
   end
