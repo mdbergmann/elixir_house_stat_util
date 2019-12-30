@@ -1,6 +1,6 @@
 # HouseStatUtil
 
-This is my first Elixir appplication.
+This is my first completely production deployed Elixir appplication that I built fully using TDD.
 
 It is only used for me internally to submit reader/meter values that I read and note manually, like electricity, water, etc.
 
