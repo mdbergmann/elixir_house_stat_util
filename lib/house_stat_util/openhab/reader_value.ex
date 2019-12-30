@@ -11,7 +11,7 @@ defmodule HouseStatUtil.OpenHab.ReaderValue do
 
   @spec url(ReaderValue.t()) :: String.t()
   def url(reader_value) do
-    reader_value.base_url <> to_string(reader_value.id)
+    reader_value.base_url <> reader_value.id
   end
 
   @spec value_as_string(ReaderValue.t()) :: String.t()

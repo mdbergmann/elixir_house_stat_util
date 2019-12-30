@@ -13,7 +13,7 @@ defmodule OpenHab.RestInserterTest do
   }
   
   test "post reader value, ok" do
-    expected_url = @reader_value.base_url <> to_string(@reader_value.id)
+    expected_url = @reader_value.base_url <> @reader_value.id
     expected_body = to_string(@reader_value.value)
     
     with_mock HTTPoison,

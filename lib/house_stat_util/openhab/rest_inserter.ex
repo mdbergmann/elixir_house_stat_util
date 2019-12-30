@@ -8,7 +8,7 @@ defmodule HouseStatUtil.OpenHab.RestInserter do
     HTTPoison.post(
       ReaderValue.url(reader_value),
       ReaderValue.value_as_string(reader_value),
-      headers: [{"Content-Type", "text/plain"}]
+      [{"Content-Type", "text/plain"}]
     )
   end
   
