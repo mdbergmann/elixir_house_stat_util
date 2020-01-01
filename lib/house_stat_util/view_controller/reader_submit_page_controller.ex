@@ -61,15 +61,15 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
 
   defp create_response({status, msg}) do
     {status,
-     html(
-       body(
-         [
-           htag(:span, msg),
-           htag(:br),
-           htag(:a, gettext("Back to input!"), href: "/")
-         ]
-       )
-     ) |> render_to_string()
+     ht :html do
+       ht :body do [
+         ht :span do msg end,
+         ht :br do end,
+         ht :a, href: "/" do
+           gettext("Back to input!")
+         end
+       ] end
+     end |> render_to_string()
     }
   end
 

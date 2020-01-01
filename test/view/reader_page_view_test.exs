@@ -13,7 +13,7 @@ defmodule HouseStatUtil.View.ReaderPageViewTest do
     assert render_result == :ok
     assert String.contains?(
       render_string,
-      htag(:h2, "Submit values to openHAB") |> render_to_string()
+      ht :h2 do "Submit values to openHAB" end |> render_to_string()
     )
   end
 
@@ -25,11 +25,9 @@ defmodule HouseStatUtil.View.ReaderPageViewTest do
     
     assert String.contains?(
       render_string,
-      form(
-        input(type: "submit", value: "Submit"),
-        action: "/submit_readers",
-        method: "post"
-      ) |> render_to_string
+      ht :form, action: "/submit_readers", method: "post" do
+        ht :input, type: "submit", value: "Submit" do end
+      end |> render_to_string
     )
   end
   
@@ -61,18 +59,18 @@ defmodule HouseStatUtil.View.ReaderPageViewTest do
     assert String.contains?(render_string, expected_water_reader)
     assert String.contains?(
       render_string,
-      input(type: "submit", value: "Submit") |> render_to_string
+      ht :input, type: "submit", value: "Submit" do end |> render_to_string
     )
     
   end
 
   defp reader_view_for_reader_ui(reader_ui) do
-    hdiv(
+    ht :div do
       [
-        input(type: "checkbox", name: "selected_" <> to_string(reader_ui.tag)),
-        input(type: "text", name: "reader_value_" <> to_string(reader_ui.tag)),
-        htag(:span, reader_ui.display_name)
+        ht :input, type: "checkbox", name: "selected_" <> to_string(reader_ui.tag) do end,
+        ht :input, type: "text", name: "reader_value_" <> to_string(reader_ui.tag) do end,
+        ht :span do reader_ui.display_name end
       ]
-    ) |> render_to_string
+    end |> render_to_string
   end
 end
