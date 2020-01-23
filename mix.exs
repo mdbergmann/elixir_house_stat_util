@@ -4,7 +4,7 @@ defmodule HouseStatUtil.MixProject do
   def project do
     [
       app: :elixir_house_stat_util,
-      version: "0.1.1",
+      version: "0.2.0",
       elixir: "~> 1.9",
       compilers: [:gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
