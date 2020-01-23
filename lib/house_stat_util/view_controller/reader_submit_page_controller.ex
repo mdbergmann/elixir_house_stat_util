@@ -5,6 +5,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
   alias HouseStatUtil.OpenHab.ReaderValue
 
   import HouseStatUtil.HTML
+  require HouseStatUtil.HTML
+  
   import HouseStatUtil.Gettext
 
   require Logger
@@ -61,14 +63,14 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
 
   defp create_response({status, msg}) do
     {status,
-     ht :html do
-       ht :body do [
-         ht :span do msg end,
-         ht :br do end,
-         ht :a, href: "/" do
+     html do
+       body do
+         span do: msg
+         br()
+         a href: "/" do
            gettext("Back to input!")
          end
-       ] end
+       end
      end |> render_to_string()
     }
   end
