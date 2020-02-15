@@ -3,6 +3,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
 
   alias HouseStatUtil.OpenHab.RestInserter
   alias HouseStatUtil.OpenHab.ReaderValue
+  alias HouseStatUtil.ViewController.Controller
 
   import HouseStatUtil.HTML
   require HouseStatUtil.HTML
@@ -12,7 +13,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
   require Logger
 
   @openhab_base_url Application.get_env(:elixir_house_stat_util, :openhab_base_url)
-  
+
+  @impl Controller
   def post(form_data) do
     Logger.debug("Got form data: #{inspect form_data}")
 
@@ -80,6 +82,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
   defp determine_reader_id(:chip), do: "ChipReloadVolumeInput"
   defp determine_reader_id(_), do: raise "Unknown reader type!"
   
+  @impl Controller
   def get(_params) do
     {400, dgettext("error", "Not supported!")}
   end

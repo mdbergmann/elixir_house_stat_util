@@ -162,6 +162,21 @@ All the `plug` definitions are executed in a chain for each request. Which means
 
 As you can see we have two routes. Each route is handled by a view controller. The only thing we pass to the view controller is the connection parameters.
 
+##### Serving static content
+
+Most web sites need to serve static content like JavaScript, CSS or images. That is no problem. The [Plug.Static](https://hexdocs.pm/plug/Plug.Static.html) does this. As with the other plugs you just define this, maybe before `plug :match` like so:
+
+```
+plug Plug.Static, from: "priv/static"
+```
+
+You can then add sub folders to 'priv/static' for images, css and javascript and define the appropriate paths in your HTML. For an image this wold then be:
+
+```
+<img src="images/foo.jpg" />
+```
+
+
 ##### Testing the router
 
 Of course the router can be tested. The router can nicely act as an integration test.  
@@ -228,11 +243,11 @@ defmodule HouseStatUtil.ViewController.Controller do
 end
 ```
 
-It defines two funtions whos parameters are 'spec'ed as a map of strings to anything (`binary()` in Erlang is actually something stringlike). And those functions return a tuple of integer (the status) and again a string (the response body).
+It defines two funtions whos parameters are 'spec'ed as a map of strings -> anything (`binary()` is Erlang and is  actually something stringlike. I could also use an Elixir `string` here). And those functions return a tuple of integer (the status) and again a string (the response body).
 
-I thought that the controller should actually define the status since it has to deal with the logic to render the view and process the form parameters. So if anything goes wrong there the controller knows it.
+I thought that the controller should actually define the status since it has to deal with the logic to render the view and process the form parameters, maybe call some backend or collaborator. So if anything goes wrong there the controller knows it.
 
-Here is the source for the conteoller:
+Here is the source for the controller:
 
 ```
 defmodule HouseStatUtil.ViewController.ReaderPageController do
@@ -251,6 +266,7 @@ defmodule HouseStatUtil.ViewController.ReaderPageController do
       display_name: "Water Reader"
     }
   ]
+  
   
   def get(_params) do
     render_result = render(

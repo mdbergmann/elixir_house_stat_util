@@ -1,6 +1,8 @@
 defmodule HouseStatUtil.ViewController.ReaderPageController do
   @behaviour HouseStatUtil.ViewController.Controller
 
+  alias HouseStatUtil.ViewController.Controller
+  
   alias HouseStatUtil.View.ReaderEntryUI
   import HouseStatUtil.View.ReaderPageView
 
@@ -18,7 +20,8 @@ defmodule HouseStatUtil.ViewController.ReaderPageController do
       display_name: "Chip Reload Volume"
     }
   ]
-  
+
+  @impl Controller
   def get(_params) do
     render_result = render(
       %{
@@ -31,6 +34,7 @@ defmodule HouseStatUtil.ViewController.ReaderPageController do
     end
   end
 
+  @impl Controller
   def post(_params) do
     {400, ""}
   end

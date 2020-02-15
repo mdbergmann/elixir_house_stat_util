@@ -1,12 +1,15 @@
 defmodule HouseStatUtil.View.ReaderPageView do
   @behaviour HouseStatUtil.View.View
 
+  alias HouseStatUtil.View.View
+  
   import HouseStatUtil.HTML
   alias HouseStatUtil.HTML
   require HouseStatUtil.HTML
 
   import HouseStatUtil.Gettext
 
+  @impl View
   def render(assigns \\ %{}) do
     rendered = html do
       render_header()
