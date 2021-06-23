@@ -12,8 +12,10 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
     "reader_value_chip" => "",
     "reader_value_elec" => "1123.6",
     "reader_value_water" => "4567",
+    "reader_value_watergarden" => "9876",
     "selected_elec" => "on",
-    "selected_water" => "on"
+    "selected_water" => "on",
+    "selected_watergarden" => "on"
   }
 
   @expected_elec_reader_value %ReaderValue{
@@ -26,6 +28,11 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
     value: 4567.0,
     base_url: @openhab_url
   }
+  @expected_watergarden_reader_value %ReaderValue{
+    id: "GardenWaterReaderStateInput",
+    value: 9876.0,
+    base_url: @openhab_url
+  }
   
   test "handle GET" do
     assert {400, "Not supported!"} = ReaderSubmitPageController.get(%{})
@@ -35,7 +42,8 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
     reader_data = %{
       "reader_value_chip" => "",
       "reader_value_elec" => "1123",
-      "reader_value_water" => "4567"
+      "reader_value_water" => "4567",
+      "reader_value_watergarden" => "9876"
     }
     
     assert {200, _} = ReaderSubmitPageController.post(reader_data)
@@ -57,6 +65,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
       [post: fn reader ->
         case reader.id do
           "ElecReaderStateInput" -> {:ok, ""}
+          "GardenWaterReaderStateInput" -> {:ok, ""}
           "WaterReaderStateInput" -> {:error, "Error on submitting water reader!"}
         end
       end] do
@@ -66,6 +75,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageControllerTest do
       
       assert called RestInserter.post(@expected_elec_reader_value)
       assert called RestInserter.post(@expected_water_reader_value)
+      assert called RestInserter.post(@expected_watergarden_reader_value)
     end
   end
 end

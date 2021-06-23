@@ -16,6 +16,10 @@ defmodule HouseStatUtil.ViewController.ReaderPageController do
       display_name: "Water Reader"
     },
     %ReaderEntryUI{
+      tag: :watergarden,
+      display_name: "Water Reader (Garden)"
+    },
+    %ReaderEntryUI{
       tag: :chip,
       display_name: "Chip Reload Volume"
     }

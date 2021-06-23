@@ -1,6 +1,6 @@
 defmodule HouseStatUtil.View.ReaderEntryUI do
   @moduledoc """
-  Possible tags: `:elec`, `:water`, `:chip`.
+  Possible tags: `:elec`, `:water`, `:water_garden`, `:chip`.
   """
   
   @enforce_keys [:tag, :display_name]

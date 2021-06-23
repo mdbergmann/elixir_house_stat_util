@@ -79,6 +79,7 @@ defmodule HouseStatUtil.ViewController.ReaderSubmitPageController do
 
   defp determine_reader_id(:elec), do: "ElecReaderStateInput"
   defp determine_reader_id(:water), do: "WaterReaderStateInput"
+  defp determine_reader_id(:watergarden), do: "GardenWaterReaderStateInput"
   defp determine_reader_id(:chip), do: "ChipReloadVolumeInput"
   defp determine_reader_id(_), do: raise "Unknown reader type!"
   
